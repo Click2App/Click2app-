@@ -1,103 +1,417 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Click2App - डाउनलोड करो अपने फेवरेट ऐप्स</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            text-align: center;
-        }
-        header {
-            background: #ff6600;
-            color: white;
-            padding: 15px 0;
-            font-size: 24px;
-        }
-        .app-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            padding: 20px;
-        }
-        .app-card {
-            background: white;
-            border-radius: 10px;
-            padding: 15px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        .app-card img {
-            width: 100%;
-            border-radius: 10px;
-        }
-        .download-btn {
-            display: inline-block;
-            background: #28a745;
-            color: white;
-            padding: 10px 20px;
-            margin-top: 10px;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-        .download-btn:hover {
-            background: #218838;
-        }
-        .telegram-btn {
-            display: inline-block;
-            background: #0088cc;
-            color: white;
-            padding: 10px 20px;
-            margin-top: 10px;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-        .telegram-btn:hover {
-            background: #006699;
-        }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Click2App — 100+ App Downloads</title>
+<meta name="description" content="Click2App: 100+ पॉपुलर ऐप्स के सुरक्षित डाउनलोड लिंक, फोटो और Telegram सहायता।">
+<style>
+  :root{
+    --brand:#1e88e5; --brand2:#1565c0; --bg:#f4f8ff; --card:#fff; --text:#14233b; --muted:#6a7d96;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
+  header{
+    background:linear-gradient(135deg,var(--brand),var(--brand2));
+    color:#fff; padding:18px 14px; text-align:center; position:sticky; top:0; z-index:10;
+    box-shadow:0 6px 16px rgba(0,0,0,.15)
+  }
+  header h1{margin:0;font-size:26px}
+  header p{margin:6px 0 0;opacity:.9}
+  .container{max-width:1100px;margin:16px auto;padding:0 14px}
+  .toolbar{display:grid;gap:10px;grid-template-columns:1fr 150px}
+  .search{display:flex;gap:8px;background:#fff;border-radius:14px;padding:10px 12px;align-items:center;border:1px solid #e6eefc;box-shadow:0 6px 16px rgba(0,0,0,.06)}
+  .search input{flex:1;border:none;outline:none;font-size:16px;background:transparent}
+  select{border-radius:12px;padding:10px 12px;border:1px solid #e3eaf6;background:#fff;font-size:15px;box-shadow:0 6px 16px rgba(0,0,0,.05)}
+  .grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(190px,1fr))}
+  .card{background:var(--card);border-radius:16px;padding:14px;border:1px solid #eaf0fb;box-shadow:0 10px 22px rgba(23,42,79,.08);transition:.15s}
+  .card:hover{transform:translateY(-2px);box-shadow:0 14px 26px rgba(23,42,79,.12)}
+  .app-head{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+  .logo{width:44px;height:44px;border-radius:12px;object-fit:contain;background:#f2f6ff;border:1px solid #edf1fb}
+  .app-name{font-weight:700;font-size:16px;line-height:1.2}
+  .app-cat{font-size:12px;color:var(--muted)}
+  .btns{display:flex;gap:8px;margin-top:10px}
+  .btn{flex:1;text-decoration:none;display:inline-block;text-align:center;padding:10px 12px;border-radius:12px;font-weight:600;border:1px solid transparent}
+  .btn-primary{background:var(--brand);color:#fff}
+  .btn-primary:hover{background:var(--brand2)}
+  .btn-ghost{background:#fff;color:var(--brand);border-color:#d9e7fb}
+  .btn-ghost:hover{background:#eef5ff}
+  .ads{background:#fff;border:1px dashed #9db8e9;color:#4a6aa3;border-radius:14px;padding:14px;text-align:center;margin:18px 0;font-size:14px}
+  .ads small{display:block;color:#7b92b6}
+  .info{background:#fff;border:1px solid #eaf0fb;border-radius:14px;padding:14px;margin:18px 0}
+  footer{margin:24px 0 18px;text-align:center;color:#6a7d96}
+  @media (max-width:520px){.toolbar{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
+<header>
+  <h1>Click2App</h1>
+  <p>100+ लोकप्रिय ऐप्स—फोटो और सुरक्षित डाउनलोड लिंक</p>
+</header>
 
-<header>Click2App - अपने फेवरेट ऐप डाउनलोड करो</header>
+<div class="container">
+  <!-- TOP AD -->
+  <div class="ads"><strong>Ad Space (Top)</strong><small>यहां अपना AdSense / अन्य Ad कोड पेस्ट करें</small></div>
 
-<!-- AdSense Ad space -->
-<div id="ad-top">
-    <!-- यहां AdSense कोड आएगा -->
+  <!-- SEARCH + CATEGORY -->
+  <div class="toolbar">
+    <div class="search">🔎
+      <input id="q" type="text" placeholder="ऐप का नाम लिखें… (जैसे WhatsApp, Facebook)" oninput="render()">
+    </div>
+    <select id="cat" onchange="render()">
+      <option value="all">सभी कैटेगरी</option>
+      <option value="social">Social</option>
+      <option value="messaging">Messaging</option>
+      <option value="video">Video</option>
+      <option value="music">Music</option>
+      <option value="tools">Tools</option>
+      <option value="shopping">Shopping</option>
+      <option value="finance">Finance</option>
+      <option value="travel">Travel</option>
+      <option value="food">Food</option>
+      <option value="education">Education</option>
+      <option value="productivity">Productivity</option>
+      <option value="health">Health</option>
+      <option value="news">News</option>
+      <option value="games">Games</option>
+    </select>
+  </div>
+
+  <div class="info">
+    <b>Telegram सहायता:</b> कोई ऐप न मिले? हमारे बॉट पर नाम भेजें—हम लिंक भेज देंगे।
+    <div class="btns" style="margin-top:10px">
+      <a class="btn btn-ghost" href="https://t.me/click2app_bot" target="_blank">🤖 @click2app_bot</a>
+      <a class="btn btn-ghost" href="https://t.me/click2app_bot?start=help" target="_blank">📩 बॉट खोलें</a>
+    </div>
+  </div>
+
+  <!-- GRID -->
+  <div id="grid" class="grid"></div>
+
+  <!-- MID AD -->
+  <div class="ads"><strong>Ad Space (Middle)</strong><small>यहां भी अपना Ad कोड पेस्ट कर सकते हैं</small></div>
+
+  <div class="info">
+    <b>नोट:</b> “डाउनलोड” पर क्लिक करने पर आप आधिकारिक Play Store पेज पर जाएंगे। कुछ ऐप्स के लिए हम कंपनी के लोगो दिखाते हैं—अगर न मिले तो placeholder दिखेगा।
+  </div>
+
+  <!-- BOTTOM AD -->
+  <div class="ads"><strong>Ad Space (Bottom)</strong><small>तीसरा Ad स्लॉट (वैकल्पिक)</small></div>
+
+  <footer>© 2025 Click2App • All rights reserved</footer>
 </div>
 
-<div class="app-list">
-    <div class="app-card">
-        <img src="https://via.placeholder.com/250x150" alt="App 1">
-        <h3>WhatsApp</h3>
-        <a href="https://www.whatsapp.com/download" class="download-btn">डाउनलोड</a>
-        <a href="https://t.me/YOUR_BOT_USERNAME" class="telegram-btn">Telegram से डाउनलोड</a>
-    </div>
-    <div class="app-card">
-        <img src="https://via.placeholder.com/250x150" alt="App 2">
-        <h3>Instagram</h3>
-        <a href="https://www.instagram.com/download" class="download-btn">डाउनलोड</a>
-        <a href="https://t.me/YOUR_BOT_USERNAME" class="telegram-btn">Telegram से डाउनलोड</a>
-    </div>
-    <div class="app-card">
-        <img src="https://via.placeholder.com/250x150" alt="App 3">
-        <h3>Facebook</h3>
-        <a href="https://www.facebook.com/download" class="download-btn">डाउनलोड</a>
-        <a href="https://t.me/YOUR_BOT_USERNAME" class="telegram-btn">Telegram से डाउनलोड</a>
-    </div>
-</div>
+<script>
+/* ---------- Settings ---------- */
+const TELEGRAM_BOT = "click2app_bot";
 
-<!-- AdSense Ad space -->
-<div id="ad-bottom">
-    <!-- यहां AdSense कोड आएगा -->
-</div>
+/* Play Store helpers */
+const psByPkg = (pkg) => `https://play.google.com/store/apps/details?id=${encodeURIComponent(pkg)}`;
+const psSearch = (q)  => `https://play.google.com/store/search?q=${encodeURIComponent(q)}&c=apps`;
 
-<footer style="background:#222; color:#fff; padding:10px; margin-top:20px;">
-    © 2025 Click2App - सभी अधिकार सुरक्षित
-</footer>
+/* Logo helper — Clearbit logo; fallback placeholder if fails */
+const logoUrl = (domain) => `https://logo.clearbit.com/${domain}?size=128`;
+const placeholder = "https://via.placeholder.com/88?text=App";
 
+/* App list: name, pkg OR url, domain, cat */
+const APPS = [
+  // ---- Social & Messaging ----
+  {name:"WhatsApp", pkg:"com.whatsapp", domain:"whatsapp.com", cat:"messaging"},
+  {name:"WhatsApp Business", pkg:"com.whatsapp.w4b", domain:"whatsapp.com", cat:"messaging"},
+  {name:"Telegram", pkg:"org.telegram.messenger", domain:"telegram.org", cat:"messaging"},
+  {name:"Instagram", pkg:"com.instagram.android", domain:"instagram.com", cat:"social"},
+  {name:"Facebook", pkg:"com.facebook.katana", domain:"facebook.com", cat:"social"},
+  {name:"Messenger", pkg:"com.facebook.orca", domain:"facebook.com", cat:"messaging"},
+  {name:"Snapchat", pkg:"com.snapchat.android", domain:"snapchat.com", cat:"social"},
+  {name:"Twitter (X)", pkg:"com.twitter.android", domain:"x.com", cat:"social"},
+  {name:"Threads", pkg:"com.instagram.barcelona", domain:"threads.net", cat:"social"},
+  {name:"Reddit", pkg:"com.reddit.frontpage", domain:"reddit.com", cat:"social"},
+  {name:"Discord", pkg:"com.discord", domain:"discord.com", cat:"messaging"},
+  {name:"Skype", pkg:"com.skype.raider", domain:"skype.com", cat:"messaging"},
+  {name:"LINE", pkg:"jp.naver.line.android", domain:"line.me", cat:"messaging"},
+  {name:"Signal", pkg:"org.thoughtcrime.securesms", domain:"signal.org", cat:"messaging"},
+  {name:"HikeLand", pkg:"com.hike.chat.stickers", domain:"hike.in", cat:"messaging"},
+  {name:"LinkedIn", pkg:"com.linkedin.android", domain:"linkedin.com", cat:"social"},
+  {name:"Pinterest", pkg:"com.pinterest", domain:"pinterest.com", cat:"social"},
+  {name:"Quora", pkg:"com.quora.android", domain:"quora.com", cat:"social"},
+  {name:"Clubhouse", pkg:"com.clubhouse.android", domain:"clubhouse.com", cat:"social"},
+  {name:"ShareChat", pkg:"in.mohalla.sharechat", domain:"sharechat.com", cat:"social"},
+
+  // ---- Video / Entertainment ----
+  {name:"YouTube", pkg:"com.google.android.youtube", domain:"youtube.com", cat:"video"},
+  {name:"YouTube Music", pkg:"com.google.android.apps.youtube.music", domain:"music.youtube.com", cat:"music"},
+  {name:"MX Player", pkg:"com.mxtech.videoplayer.ad", domain:"mxplayer.in", cat:"video"},
+  {name:"Hotstar", pkg:"in.startv.hotstar", domain:"hotstar.com", cat:"video"},
+  {name:"JioCinema", pkg:"com.jio.media.ondemand", domain:"jiocinema.com", cat:"video"},
+  {name:"Netflix", pkg:"com.netflix.mediaclient", domain:"netflix.com", cat:"video"},
+  {name:"Amazon Prime Video", pkg:"com.amazon.avod.thirdpartyclient", domain:"primevideo.com", cat:"video"},
+  {name:"Sony LIV", pkg:"com.sonyliv", domain:"sonyliv.com", cat:"video"},
+  {name:"ZEE5", pkg:"com.graymatrix.did", domain:"zee5.com", cat:"video"},
+  {name:"Voot", pkg:"com.tv.v18.viola", domain:"voot.com", cat:"video"},
+  {name:"TikTok", pkg:"com.zhiliaoapp.musically", domain:"tiktok.com", cat:"video"},
+
+  // ---- Music / Audio ----
+  {name:"Spotify", pkg:"com.spotify.music", domain:"spotify.com", cat:"music"},
+  {name:"Wynk Music", pkg:"com.bsbportal.music", domain:"wynk.in", cat:"music"},
+  {name:"JioSaavn", pkg:"com.jio.media.jiobeats", domain:"jiosaavn.com", cat:"music"},
+  {name:"Gaana", pkg:"com.gaana", domain:"gaana.com", cat:"music"},
+  {name:"Apple Music", pkg:"com.apple.android.music", domain:"music.apple.com", cat:"music"},
+
+  // ---- Shopping ----
+  {name:"Amazon", pkg:"in.amazon.mShop.android.shopping", domain:"amazon.in", cat:"shopping"},
+  {name:"Flipkart", pkg:"com.flipkart.android", domain:"flipkart.com", cat:"shopping"},
+  {name:"Myntra", pkg:"com.myntra.android", domain:"myntra.com", cat:"shopping"},
+  {name:"Ajio", pkg:"com.ril.ajio", domain:"ajio.com", cat:"shopping"},
+  {name:"Meesho", pkg:"com.meesho.supply", domain:"meesho.com", cat:"shopping"},
+  {name:"Tata Neu", pkg:"com.tatadigital.tataneu", domain:"tatadigital.com", cat:"shopping"},
+  {name:"Nykaa", pkg:"com.fsn.nykaa", domain:"nykaa.com", cat:"shopping"},
+  {name:"Snapdeal", pkg:"com.snapdeal.main", domain:"snapdeal.com", cat:"shopping"},
+  {name:"OLX", pkg:"com.olx.southasia", domain:"olx.in", cat:"shopping"},
+  {name:"CRED Store", pkg:"in.wallet.crunch", domain:"cred.club", cat:"shopping"},
+
+  // ---- Finance / Payments ----
+  {name:"Google Pay (GPay)", pkg:"com.google.android.apps.nbu.paisa.user", domain:"pay.google.com", cat:"finance"},
+  {name:"PhonePe", pkg:"com.phonepe.app", domain:"phonepe.com", cat:"finance"},
+  {name:"Paytm", pkg:"net.one97.paytm", domain:"paytm.com", cat:"finance"},
+  {name:"BHIM", pkg:"in.org.npci.upiapp", domain:"bhimupi.org.in", cat:"finance"},
+  {name:"Airtel Thanks", pkg:"com.myairtelapp", domain:"airtel.in", cat:"finance"},
+  {name:"Mobikwik", pkg:"com.mobikwik_new", domain:"mobikwik.com", cat:"finance"},
+  {name:"Amazon Pay", pkg:"in.amazon.mShop.android.shopping", domain:"amazonpay.in", cat:"finance"},
+  {name:"CRED", pkg:"in.wallet.crunch", domain:"cred.club", cat:"finance"},
+  {name:"CoinSwitch", pkg:"com.coinswitch.kuber", domain:"coinswitch.co", cat:"finance"},
+  {name:"Groww", pkg:"com.nextbillion.groww", domain:"groww.in", cat:"finance"},
+  {name:"Upstox", pkg:"in.upstox.pro", domain:"upstox.com", cat:"finance"},
+  {name:"Zerodha Kite", pkg:"com.rainmatter.kite", domain:"kite.zerodha.com", cat:"finance"},
+
+  // ---- Travel / Maps ----
+  {name:"Google Maps", pkg:"com.google.android.apps.maps", domain:"google.com", cat:"travel"},
+  {name:"Uber", pkg:"com.ubercab", domain:"uber.com", cat:"travel"},
+  {name:"Ola", pkg:"com.olacabs.customer", domain:"olacabs.com", cat:"travel"},
+  {name:"Rapido", pkg:"com.rapido.passenger", domain:"rapido.bike", cat:"travel"},
+  {name:"IRCTC Rail Connect", pkg:"cris.org.in.prs.ima", domain:"irctc.co.in", cat:"travel"},
+  {name:"MakeMyTrip", pkg:"com.makemytrip", domain:"makemytrip.com", cat:"travel"},
+  {name:"Goibibo", pkg:"com.goibibo", domain:"goibibo.com", cat:"travel"},
+  {name:"Cleartrip", pkg:"com.cleartrip.android", domain:"cleartrip.com", cat:"travel"},
+  {name:"Booking.com", pkg:"com.booking", domain:"booking.com", cat:"travel"},
+  {name:"Airbnb", pkg:"com.airbnb.android", domain:"airbnb.com", cat:"travel"},
+
+  // ---- Food / Delivery ----
+  {name:"Zomato", pkg:"com.application.zomato", domain:"zomato.com", cat:"food"},
+  {name:"Swiggy", pkg:"in.swiggy.android", domain:"swiggy.com", cat:"food"},
+  {name:"Domino's", pkg:"com.Dominos", domain:"dominos.co.in", cat:"food"},
+  {name:"McDonald's", pkg:"com.mcdonalds.app", domain:"mcdindia.com", cat:"food"},
+  {name:"KFC", pkg:"com.kfc.mobile", domain:"online.kfc.co.in", cat:"food"},
+
+  // ---- Tools / Utility ----
+  {name:"ShareMe", pkg:"com.xiaomi.midrop", domain:"mi.com", cat:"tools"},
+  {name:"ShareIt", pkg:"com.lenovo.anyshare.gps", domain:"ushareit.com", cat:"tools"},
+  {name:"Google Drive", pkg:"com.google.android.apps.docs", domain:"drive.google.com", cat:"tools"},
+  {name:"Dropbox", pkg:"com.dropbox.android", domain:"dropbox.com", cat:"tools"},
+  {name:"Adobe Scan", pkg:"com.adobe.scan.android", domain:"adobe.com", cat:"tools"},
+  {name:"CamScanner", pkg:"com.intsig.camscanner", domain:"camscanner.com", cat:"tools"},
+  {name:"Gmail", pkg:"com.google.android.gm", domain:"gmail.com", cat:"tools"},
+  {name:"Chrome", pkg:"com.android.chrome", domain:"google.com", cat:"tools"},
+  {name:"Firefox", pkg:"org.mozilla.firefox", domain:"mozilla.org", cat:"tools"},
+  {name:"Truecaller", pkg:"com.truecaller", domain:"truecaller.com", cat:"tools"},
+  {name:"Microsoft Authenticator", pkg:"com.azure.authenticator", domain:"microsoft.com", cat:"tools"},
+  {name:"Authenticator (Google)", pkg:"com.google.android.apps.authenticator2", domain:"google.com", cat:"tools"},
+  {name:"WPS Office", pkg:"cn.wps.moffice_eng", domain:"wps.com", cat:"tools"},
+  {name:"Microsoft Word", pkg:"com.microsoft.office.word", domain:"microsoft.com", cat:"tools"},
+  {name:"Microsoft Excel", pkg:"com.microsoft.office.excel", domain:"microsoft.com", cat:"tools"},
+  {name:"PowerPoint", pkg:"com.microsoft.office.powerpoint", domain:"microsoft.com", cat:"tools"},
+  {name:"Notion", pkg:"notion.id", domain:"notion.so", cat:"productivity"},
+  {name:"Evernote", pkg:"com.evernote", domain:"evernote.com", cat:"productivity"},
+  {name:"Todoist", pkg:"com.todoist", domain:"todoist.com", cat:"productivity"},
+  {name:"Google Keep", pkg:"com.google.android.keep", domain:"keep.google.com", cat:"productivity"},
+  {name:"Xender", pkg:"cn.xender", domain:"xender.com", cat:"tools"},
+  {name:"Files by Google", pkg:"com.google.android.apps.nbu.files", domain:"google.com", cat:"tools"},
+  {name:"Speedtest by Ookla", pkg:"org.zwanoo.android.speedtest", domain:"speedtest.net", cat:"tools"},
+  {name:"ZArchiver", pkg:"ru.zdevs.zarchiver", domain:"zdevs.ru", cat:"tools"},
+  {name:"Mi File Manager", pkg:"com.mi.android.globalFileexplorer", domain:"mi.com", cat:"tools"},
+  {name:"ColorNote", pkg:"com.socialnmobile.dictapps.notepad.color.note", domain:"colornote.com", cat:"productivity"},
+  {name:"Nova Launcher", pkg:"com.teslacoilsw.launcher", domain:"novalauncher.com", cat:"tools"},
+  {name:"KWGT", pkg:"org.kustom.widget", domain:"kustom.rocks", cat:"tools"},
+
+  // ---- Education ----
+  {name:"Google Classroom", pkg:"com.google.android.apps.classroom", domain:"classroom.google.com", cat:"education"},
+  {name:"Byju's", pkg:"com.byjus.thelearningapp", domain:"byjus.com", cat:"education"},
+  {name:"Unacademy", pkg:"com.unacademyapp", domain:"unacademy.com", cat:"education"},
+  {name:"Vedantu", pkg:"com.vedantu.app", domain:"vedantu.com", cat:"education"},
+  {name:"Khan Academy", pkg:"org.khanacademy.android", domain:"khanacademy.org", cat:"education"},
+  {name:"Coursera", pkg:"org.coursera.android", domain:"coursera.org", cat:"education"},
+  {name:"Udemy", pkg:"com.udemy.android", domain:"udemy.com", cat:"education"},
+  {name:"Duolingo", pkg:"com.duolingo", domain:"duolingo.com", cat:"education"},
+
+  // ---- Health / Fitness ----
+  {name:"HealthifyMe", pkg:"com.healthifyme.basic", domain:"healthifyme.com", cat:"health"},
+  {name:"Cure.fit", pkg:"fit.cure.android", domain:"cult.fit", cat:"health"},
+  {name:"Google Fit", pkg:"com.google.android.apps.fitness", domain:"google.com", cat:"health"},
+  {name:"Flo", pkg:"org.iggymedia.periodtracker", domain:"flo.health", cat:"health"},
+  {name:"MyFitnessPal", pkg:"com.myfitnesspal.android", domain:"myfitnesspal.com", cat:"health"},
+  {name:"Strava", pkg:"com.strava", domain:"strava.com", cat:"health"},
+
+  // ---- News ----
+  {name:"Inshorts", pkg:"com.nis.app", domain:"inshorts.com", cat:"news"},
+  {name:"Dailyhunt", pkg:"com.eterno", domain:"dailyhunt.in", cat:"news"},
+  {name:"Google News", pkg:"com.google.android.apps.magazines", domain:"news.google.com", cat:"news"},
+  {name:"The Times of India", pkg:"com.toi.newsreader.activities", domain:"timesofindia.indiatimes.com", cat:"news"},
+  {name:"NDTV", pkg:"com.july.ndtv", domain:"ndtv.com", cat:"news"},
+  {name:"ABP Live", pkg:"com.winit.starnews.hin", domain:"abplive.com", cat:"news"},
+
+  // ---- Games (few) ----
+  {name:"BGMI", pkg:"com.pubg.imobile", domain:"bgmi.com", cat:"games"},
+  {name:"Free Fire MAX", pkg:"com.dts.freefiremax", domain:"garena.com", cat:"games"},
+  {name:"Call of Duty Mobile", pkg:"com.activision.callofduty.shooter", domain:"callofduty.com", cat:"games"},
+  {name:"Candy Crush Saga", pkg:"com.king.candycrushsaga", domain:"king.com", cat:"games"},
+  {name:"Clash of Clans", pkg:"com.supercell.clashofclans", domain:"supercell.com", cat:"games"},
+  {name:"Ludo King", pkg:"com.ludo.king", domain:"ludoking.com", cat:"games"},
+  {name:"Subway Surfers", pkg:"com.kiloo.subwaysurf", domain:"sybogames.com", cat:"games"},
+
+  // ---- More popular utilities to reach 100+ ----
+  {name:"Snapseed", pkg:"com.niksoftware.snapseed", domain:"snapseed.online", cat:"tools"},
+  {name:"PicsArt", pkg:"com.picsart.studio", domain:"picsart.com", cat:"tools"},
+  {name:"CapCut", pkg:"com.lemon.lvoverseas", domain:"capcut.com", cat:"tools"},
+  {name:"KineMaster", pkg:"com.nexstreaming.app.kinemasterfree", domain:"kinemaster.com", cat:"tools"},
+  {name:"VN Video Editor", pkg:"com.frontrow.vlog", domain:"vlognow.me", cat:"tools"},
+  {name:"Adobe Lightroom", pkg:"com.adobe.lrmobile", domain:"adobe.com", cat:"tools"},
+  {name:"Adobe Premiere Rush", pkg:"com.adobe.premiererush.videoeditor", domain:"adobe.com", cat:"tools"},
+  {name:"Canva", pkg:"com.canva.editor", domain:"canva.com", cat:"tools"},
+  {name:"Remini", pkg:"com.bigwinepot.nwdn.international", domain:"remini.ai", cat:"tools"},
+  {name:"Google Photos", pkg:"com.google.android.apps.photos", domain:"photos.google.com", cat:"tools"},
+  {name:"Pinterest Lite", pkg:"com.pinterest.twa", domain:"pinterest.com", cat:"social"},
+  {name:"Shazam", pkg:"com.shazam.android", domain:"shazam.com", cat:"music"},
+  {name:"SoundCloud", pkg:"com.soundcloud.android", domain:"soundcloud.com", cat:"music"},
+  {name:"Uber Eats (INTL)", pkg:"com.ubercab.eats", domain:"ubereats.com", cat:"food"},
+  {name:"Blinkit", pkg:"com.grofers.customerapp", domain:"blinkit.com", cat:"food"},
+  {name:"Zepto", pkg:"com.zeptoconsumerapp", domain:"zeptonow.com", cat:"food"},
+  {name:"BigBasket", pkg:"com.bigbasket.mobileapp", domain:"bigbasket.com", cat:"food"},
+  {name:"Dunzo", pkg:"in.dunzo.user", domain:"dunzo.com", cat:"food"},
+  {name:"1MG (Tata 1mg)", pkg:"com.aranoah.healthkart.plus", domain:"1mg.com", cat:"health"},
+  {name:"Practo", pkg:"com.practo.fabric", domain:"practo.com", cat:"health"},
+  {name:"Arogya Setu", pkg:"nic.goi.aarogyasetu", domain:"mygov.in", cat:"health"},
+  {name:"mAadhaar", pkg:"in.gov.uidai.mAadhaarPlus", domain:"uidai.gov.in", cat:"tools"},
+  {name:"DigiLocker", pkg:"com.digilocker.android", domain:"digitallocker.gov.in", cat:"tools"},
+  {name:"mParivahan", pkg:"nic.mparivahan", domain:"parivahan.gov.in", cat:"tools"},
+  {name:"UMANG", pkg:"in.gov.umang.negd.g2c", domain:"umang.gov.in", cat:"tools"},
+  {name:"Bharat BillPay", pkg:"com.npci.bbps", domain:"npci.org.in", cat:"finance"},
+  {name:"IRCTC eCatering", pkg:"cris.org.in.ecatering", domain:"ecatering.irctc.co.in", cat:"food"},
+  {name:"Google Calendar", pkg:"com.google.android.calendar", domain:"calendar.google.com", cat:"productivity"},
+  {name:"Google Translate", pkg:"com.google.android.apps.translate", domain:"translate.google.com", cat:"tools"},
+  {name:"Adobe Acrobat Reader", pkg:"com.adobe.reader", domain:"adobe.com", cat:"tools"},
+  {name:"PDF Viewer", pkg:"com.google.android.apps.pdfviewer", domain:"google.com", cat:"tools"},
+  {name:"Mi Calculator", pkg:"com.miui.calculator", domain:"mi.com", cat:"tools"},
+  {name:"Calculator", pkg:"com.google.android.calculator", domain:"google.com", cat:"tools"},
+  {name:"Compass", pkg:"com.superelement.compass", domain:"", cat:"tools"},
+  {name:"Weather", pkg:"com.google.android.apps.weather", domain:"weather.com", cat:"tools"},
+  {name:"Yahoo Mail", pkg:"com.yahoo.mobile.client.android.mail", domain:"mail.yahoo.com", cat:"tools"},
+  {name:"Outlook", pkg:"com.microsoft.office.outlook", domain:"outlook.com", cat:"tools"},
+  {name:"Teams", pkg:"com.microsoft.teams", domain:"microsoft.com", cat:"tools"},
+  {name:"Zoom", pkg:"us.zoom.videomeetings", domain:"zoom.us", cat:"tools"},
+  {name:"Google Meet", pkg:"com.google.android.apps.tachyon", domain:"meet.google.com", cat:"tools"},
+  {name:"BOSE Music", pkg:"com.bose.bosemusic", domain:"bose.com", cat:"music"},
+  {name:"Mi Fit (Zepp Life)", pkg:"com.xiaomi.hm.health", domain:"zepp.com", cat:"health"},
+  {name:"Fitbit", pkg:"com.fitbit.FitbitMobile", domain:"fitbit.com", cat:"health"},
+  {name:"Nike Run Club", pkg:"com.nike.plusgps", domain:"nike.com", cat:"health"},
+  {name:"Adidas Running", pkg:"com.runtastic.android", domain:"adidas.com", cat:"health"},
+  {name:"BookMyShow", pkg:"com.bt.bms", domain:"bookmyshow.com", cat:"entertainment"},
+  {name:"Google Pay for Business", pkg:"com.google.android.apps.nbu.paisa.merchant", domain:"pay.google.com", cat:"finance"},
+  {name:"PhonePe Business", pkg:"com.phonepe.app.business", domain:"phonepe.com", cat:"finance"},
+  {name:"WhatsApp Aero (info)", url:"https://www.whatsapp.com/android", domain:"whatsapp.com", cat:"messaging"},
+  {name:"Gboard", pkg:"com.google.android.inputmethod.latin", domain:"google.com", cat:"tools"},
+  {name:"SwiftKey Keyboard", pkg:"com.touchtype.swiftkey", domain:"swiftkey.com", cat:"tools"},
+  {name:"Bitwarden", pkg:"com.x8bit.bitwarden", domain:"bitwarden.com", cat:"tools"},
+  {name:"LastPass", pkg:"com.lastpass.lpandroid", domain:"lastpass.com", cat:"tools"}
+];
+
+/* ---------- Render ---------- */
+function makeCard(app){
+  const href = app.pkg ? psByPkg(app.pkg) : (app.url || psSearch(app.name));
+  const img = document.createElement('img');
+  img.className = "logo";
+  img.src = app.domain ? logoUrl(app.domain) : placeholder;
+  img.alt = app.name;
+  img.onerror = () => { img.src = placeholder; };
+
+  const wrap = document.createElement('div');
+  wrap.className = 'card';
+  wrap.setAttribute('data-name', app.name.toLowerCase());
+  wrap.setAttribute('data-cat', app.cat || 'other');
+
+  const head = document.createElement('div');
+  head.className = 'app-head';
+
+  const meta = document.createElement('div');
+  const name = document.createElement('div');
+  name.className = 'app-name';
+  name.textContent = app.name;
+  const cat = document.createElement('div');
+  cat.className = 'app-cat';
+  cat.textContent = (app.cat || 'Other').toUpperCase();
+  meta.appendChild(name); meta.appendChild(cat);
+
+  head.appendChild(img); head.appendChild(meta);
+
+  const btns = document.createElement('div');
+  btns.className = 'btns';
+
+  const d1 = document.createElement('a');
+  d1.className = 'btn btn-primary';
+  d1.href = href; d1.target = "_blank";
+  d1.textContent = "⬇️ डाउनलोड";
+
+  const d2 = document.createElement('a');
+  d2.className = 'btn btn-ghost';
+  d2.href = `https://t.me/${TELEGRAM_BOT}?start=${encodeURIComponent(app.name)}`;
+  d2.target = "_blank";
+  d2.textContent = "🤖 Telegram से पूछें";
+
+  btns.appendChild(d1); btns.appendChild(d2);
+
+  wrap.appendChild(head);
+  wrap.appendChild(btns);
+  return wrap;
+}
+
+function render(){
+  const q = (document.getElementById('q').value || "").toLowerCase().trim();
+  const cat = document.getElementById('cat').value;
+  const grid = document.getElementById('grid');
+  grid.innerHTML = "";
+
+  const filtered = APPS.filter(a=>{
+    const byName = a.name.toLowerCase().includes(q);
+    const byCat = cat==='all' ? true : (a.cat===cat);
+    return byName && byCat;
+  });
+
+  if(!filtered.length){
+    const empty = document.createElement('div');
+    empty.className = 'card';
+    empty.innerHTML = `
+      <div style="text-align:center;color:#6a7d96">
+        <div style="font-weight:700;margin-bottom:6px">कोई ऐप नहीं मिला</div>
+        <div style="margin-bottom:12px">हमने आपके लिए Play Store सर्च तैयार किया है।</div>
+        <div class="btns" style="justify-content:center">
+          <a class="btn btn-primary" href="${psSearch(q||'apps')}" target="_blank">🔎 Play Store में खोजें</a>
+          <a class="btn btn-ghost" href="https://t.me/${TELEGRAM_BOT}" target="_blank">🤖 Telegram पर पूछें</a>
+        </div>
+      </div>`;
+    grid.appendChild(empty);
+    return;
+  }
+
+  const frag = document.createDocumentFragment();
+  filtered.forEach(app => frag.appendChild(makeCard(app)));
+  grid.appendChild(frag);
+}
+
+render();
+</script>
+
+<!-- Example AdSense snippet (Approval के बाद अपना कोड पेस्ट करें)
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=YOUR-CLIENT-ID" crossorigin="anonymous"></script>
+<ins class="adsbygoogle" style="display:block" data-ad-client="YOUR-CLIENT-ID" data-ad-slot="YOUR-SLOT-ID" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+-->
 </body>
 </html>
